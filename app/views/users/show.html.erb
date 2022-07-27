@@ -1,0 +1,31 @@
+<div class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="row">
+          <%= image_tag user_avatar(@user, 75) %>
+          <%= @user.first_name + ' ' + @user.last_name %>
+        </div>
+
+
+          <% if @user.profession.present? %>
+              <p>Profession: <%= @user.profession %></p>
+          <% end %>
+          <% if @user.location.present? %>
+              <p>Location: <%= @user.location %></p>
+          <% end %>
+
+          <% if @user == current_user && @user.profession.present? && @user.location.present? %>
+              <%= link_to "Edit Info", edit_user_path(@user) %>
+          <% elsif @user == current_user %>
+              <%= link_to "Add Info", edit_user_path(@user) %>
+          <% end %>
+        </div>
+
+       <div class="column">
+         <div class="subtitle"><%= @user.first_name %>'s posts</div>
+           <p> No posts yet! </p>
+        </div>
+       </div>
+      </div>
+     </div>
