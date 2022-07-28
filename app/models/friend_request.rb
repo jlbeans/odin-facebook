@@ -1,5 +1,4 @@
 class FriendRequest < ApplicationRecord
-
   validate :not_self
   validate :not_friends
 
@@ -16,12 +15,13 @@ class FriendRequest < ApplicationRecord
     self.destroy
   end
 
+  private
+
   def not_self
-    errors.add(:base, message: "sender cannot be the same as receiver") if sender == receiver
+    errors.add(:receiver, message: "cannot be the same as sender") if sender == receiver
   end
 
   def not_friends
-    errors.add(:base, message: "you're already friends!") if sender.friends.include?(receiver)
+    errors.add(:receiver, message: "is already a friend!") if  sender.friends.include?(receiver) || receiver.friends.include?(sender)
   end
-
 end

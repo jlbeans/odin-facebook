@@ -7,7 +7,10 @@
             <% @users.each do |user| %>
               <% next if user == current_user %>
               <li> <%= image_tag user_avatar(user, 75) %>
-                   <%= link_to user.first_name + ' ' + user.last_name, user_path(user) %></li>
+                   <%= link_to user.first_name + ' ' + user.last_name, user_path(user) %>
+
+                   <%= link_to "Add Friend", friend_requests_path, data: { "turbo-method": :post }, class: "button is-primary" %></li>
+
             <% end %>
           </ul>
         </div>
