@@ -1,0 +1,26 @@
+<div class="section">
+  <div class="container">
+    <div class="title is-4 has-text-centered">New Friend Requests</div>
+      <div class="columns">
+        <div class="column is-three-fifths">
+          <p class="has-text-centered"> You have no new requests at this time... <% if @incoming_requests.empty? %></p>
+          <% end %>
+          <ul>
+            <% @incoming_requests.each do |fr| %>
+              <li> <div class="level">
+                     <div class="level-left">
+                       <p class="level-item"><%= image_tag user_avatar(user, 75) %></p>
+                       <p class="level-item"><%= link_to fr.sender.first_name + ' ' + fr.sender.last_name, user_path(fr.sender) %></p>
+                     </div>
+
+                     <div class="level-right">
+                       <p class="level-item"><%= render "accept_request", sender: fr.sender, sender_id: fr.sender.id %></p>
+                     </div>
+                  </div>
+               </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>

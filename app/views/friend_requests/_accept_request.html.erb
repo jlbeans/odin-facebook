@@ -1,0 +1,2 @@
+<%= link_to "Accept", friend_ships_path(sender_id: sender_id), data: { "turbo-method": :post }, class: "button is-primary" %>
+<%= link_to "Decline", friend_request_path(id: current_user.received_friend_requests.find_by(sender: sender)),  data: { "turbo-method": :delete }, class: "button is-danger" %>

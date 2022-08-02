@@ -2,11 +2,13 @@ class FriendRequest < ApplicationRecord
   validate :not_self
   validate :not_friends
 
+  validates :sender, presence: true
+  validates :receiver, presence: true, uniqueness: { scope: :sender}
+
   belongs_to :sender, class_name: "User"
   belongs_to :receiver, class_name: "User"
 
   def accept
-    sender.friends << receiver
     receiver.friends << sender
     self.destroy
   end

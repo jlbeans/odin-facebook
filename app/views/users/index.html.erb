@@ -1,16 +1,30 @@
 <div class= "section">
   <div class= "container">
     <div class= "columns is-centered">
-      <div class= "column is-one-third">
-        <div class= "title is-4">Odin's Club Members</div>
+      <div class= "column is-three-fifths">
+        <div class= "title is-4 has-text-centered">Odin's Club Members</div>
           <ul>
             <% @users.each do |user| %>
               <% next if user == current_user %>
-              <li> <%= image_tag user_avatar(user, 75) %>
-                   <%= link_to user.first_name + ' ' + user.last_name, user_path(user) %>
+              <li> <div class="level">
+                     <div class="level-left">
+                       <p class="level-item"><%= image_tag user_avatar(user, 75) %></p>
+                       <p class="level-item"><%= link_to user.first_name + ' ' + user.last_name, user_path(user) %></p>
+                     </div>
 
-                   <%= link_to "Add Friend", friend_requests_path, data: { "turbo-method": :post }, class: "button is-primary" %></li>
-
+                     <div class="level-right">
+                       <% if current_user.friends.include?(user) %>
+                         <p class="level-item"><%= link_to "Remove Friend", friend_ship_path(id: user.id), data: { "turbo-method": :delete }, class: "button is-danger" %></p>
+                       <% elsif FriendRequest.where(sender: current_user, receiver: user).any? %>
+                         <p class="level-item"><%= link_to "Delete Pending Request", friend_request_path(current_user.sent_friend_requests.find_by(receiver: user)), data: { "turbo-method": :delete }, class: "button is-danger" %></p>
+                       <% elsif FriendRequest.where(sender: user, receiver: current_user).any? %>
+                         <p class="level-item"><%= render "friend_requests/accept_request", sender: user, sender_id: user.id %></p>
+                       <% else %>
+                         <p class="level-item"><%= link_to "Add Friend", friend_requests_path(friend_request: {receiver_id: user.id}), data: { "turbo-method": :post }, class: "button is-primary" %></p>
+                       <% end %>
+                      </div>
+                    </div><br />
+               </li>
             <% end %>
           </ul>
         </div>
