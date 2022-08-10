@@ -1,0 +1,28 @@
+
+<% if commentable.comments.any? %>
+  <% commentable.comments.each do |comment| %>
+    <article class="media">
+      <figure class="media-left">
+        <%= image_tag user_avatar(comment.user, 64) %>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong><%= comment.user.first_name %></strong> - <small><%= time_ago_in_words(comment.created_at) %> ago</small>
+            <br>
+            <%= comment.body %>
+          </p>
+         </div>
+         <nav class="level is-mobile">
+           <div class="level-left">
+             <p class="level-item">
+               <small><%= link_to "View comment", comment_path(comment) %></small>
+             </p>
+           </div>
+          </nav>
+        </div>
+     </article>
+   <% end %>
+<% else %>
+    <p>Nothing yet!</p>
+<% end %>

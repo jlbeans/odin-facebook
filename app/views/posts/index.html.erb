@@ -1,0 +1,29 @@
+<div class="section">
+  <div class="container">
+    <div class="subtitle is-5 has-text-centered">Timeline</div>
+      <%= render "form", locals: {post: @post} %>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    <% @posts.each do |post| %>
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            <strong><%= post.user.first_name %></strong> -
+            <small><%= time_ago_in_words(post.created_at) %> ago</small>
+          </p>
+        </header>
+         <div class="card-content">
+           <div class="content">
+             <%= post.body %>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <p class="card-footer-item"> <small><%= link_to "View Post", post_path(post) %></small> </p>
+          </footer>
+        </div>
+     <% end %>
+    </div>
+  </div>

@@ -1,0 +1,46 @@
+<div class="section">
+  <div class="container">
+    <div class="box">
+      <article class="media">
+        <figure class="media-left">
+          <%= image_tag user_avatar(@post.user, 64) %>
+        </figure>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong><%= @post.user.first_name %></strong> -
+              <small><%= time_ago_in_words(@post.created_at) %> ago</small>
+            <br>
+              <%= @post.body %>
+            </p>
+
+
+            <% if @post.user == current_user %>
+              <nav class="level is-mobile">
+                <div class="level-left">
+                  <p class="level-item">
+                    <small> <%= link_to edit_post_path(@post) do %>
+                              <i class="fa-solid fa-pen-to-square"></i>
+                            <% end %> |
+                            <%= link_to post_path(@post), data: {"turbo-method": :delete} do %>
+                              <i class="fa-solid fa-trash-can"></i>
+                            <% end %>
+                     </small>
+                    </p>
+                   </div>
+                  </nav>
+             <% end %>
+           </div>
+          </article>
+         </div>
+        </div>
+
+   <div class="comments-container">
+      <div class="subtitle is-6"></div>
+      <%= render partial: "comments/comments", locals: {commentable: @post} %>
+   </div>
+
+   <div class="comment-form">
+     <%= render partial: "comments/form", locals: {commentable: @post} %>
+   </div>
+ </div>
