@@ -1,0 +1,4 @@
+<% commentable.comments.each do |comment| %>
+  <%= render "comments/display_comment", comment: comment %>
+  <%= render "comments/comment_links", comment: comment %>
+<% end %>

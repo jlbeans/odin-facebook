@@ -1,0 +1,39 @@
+<div class="box">
+  <article class="media">
+    <figure class="media-left">
+      <%= image_tag user_avatar(post.user, 64) %>
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= link_to post.user.name, user_path(post.user), class: "has-text-info-dark" %></strong> -
+          <small><%= time_ago_in_words(post.created_at) %> ago</small>
+        <br>
+          <%= post.body %>
+        </p>
+
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <p class="level-item like-button">
+              <% like = post.likes.find_by(user: current_user) %>
+                <% if like %>
+                  <%= link_to like_path(like), data: { "turbo-method": :delete }, class:"hidden-button has-text-info-dark" do %>
+                    <i class="fas fa-thumbs-up liked"></i> <%= post.likes.count %>
+                  <% end %>
+                <% else %>
+                   <%= link_to likes_path, method: :post,  class: "hidden-button has-text-info-dark" do %>
+                     <i class='fas fa-thumbs-up'></i> <%= post.likes.count %>
+                   <% end %>
+                <% end %>
+             </p>
+             <p class="level-item comments-link">
+               <%= link_to post_path(post), class: "hidden-button has-text-info-dark" do %>
+                 <i class="fa-solid fa-comment"></i> <small>Comments</small>
+               <% end %>
+             </p>
+           </div>
+         </nav>
+        </div>
+       </div>
+    </article>
+  </div>

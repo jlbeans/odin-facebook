@@ -1,4 +1,4 @@
-<%= simple_form_for [@post, Post.new] do |f| %>
+<%= simple_form_for(@post) do |f| %>
   <article class="media">
     <figure class="media-left">
        <%= image_tag user_avatar(current_user, 64) %>
@@ -12,7 +12,7 @@
       <nav class="level">
         <div class="level-left">
           <div class="level-item">
-            <%= f.button :submit, "Post", class: "button is-primary" %>
+            <%= f.button :submit, "Post", class: "button is-primary-light" %>
           </div>
         </div>
       </nav>
