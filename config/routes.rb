@@ -2,18 +2,22 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
 
-  resources :users
+  resources :users, only: [:index, :show, :edit, :update]
 
   resources :friend_requests, only: [:index, :create, :destroy ]
   resources :friend_ships, only: [:index, :create, :destroy]
 
   resources :posts do
     resources :comments, module: :posts
+    resources :likes, module: :likes, only: [:create, :destroy]
   end
 
   resources :comments do
     resources :comments, module: :comments
+    resources :likes, module: :likes, only: [:create, :destroy]
   end
+
+  resources :likes, only: [:create, :destroy]
   # Defines the root path route ("/")
    root "posts#index"
 end

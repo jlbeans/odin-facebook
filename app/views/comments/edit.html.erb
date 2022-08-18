@@ -1,0 +1,37 @@
+<div class="section">
+  <div class="container">
+    <div class="subtitle is-6 has-text-centered">Editing Comment</div>
+      <%= simple_form_for(@comment) do |f| %>
+        <article class="media">
+          <figure class="media-left">
+            <%= image_tag user_avatar(current_user, 64) %>
+          </figure>
+          <div class="media-content">
+            <div class="field">
+              <div class="control comment-box">
+                <%= f.input :body, label: false, input_html: { class: "textarea" }, wrapper: false, placeholder: "Add a comment" %>
+              </div>
+            </div>
+            <nav class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <%= f.button :submit, "Update Comment", data: {"turbo-method": :patch}, class: "button is-primary" %>
+               </div>
+              </div>
+            </nav>
+          </div>
+         </article>
+       <% end %>
+      </div>
+    </div>
+
+<nav class="navbar is-fixed-bottom">
+<div class="navbar-menu">
+  <div class="navbar-item">
+    <div class="field is-grouped">
+      <p class="control">
+        <%= link_to 'Cancel', comment_path(@comment), class: "button is-dark" %>
+      </p>
+  </div>
+</div>
+</nav>

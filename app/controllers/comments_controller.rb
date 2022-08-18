@@ -1,36 +1,39 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @comments = @commentable.comments
-  end
 
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
 
     if @comment.save
-      redirect_to @comment, flash[:notice]= 'Your comment was successfully posted!'
+      flash[:notice]= 'Your comment was successfully posted!'
+      redirect_to @commentable
     else
-      redirect_to :back, flash[:alert]= "Error"
+      flash[:alert]= "Error"
+      redirect_back fallback_location: root_path
     end
   end
 
   def update
     if @comment.update
-      redirect_to comment, flash[:notice]= "Changes saved!"
+      flash[:notice]= "Changes saved!"
+      redirect_to @comment.commentable
     else
-      redirect_to :back, flash[:alert]= "Error updating"
+      flash[:alert]= "Error updating"
+      render :edit
     end
   end
 
   def show
-
   end
 
   def destroy
-    @comment.destroy
+    if @comment.destroy
+     flash[:notice]= "Comment deleted"
+    else
+     flash[:alert]= "Error"
+    end
+    redirect_back fallback_location: root_path
   end
 
   private

@@ -3,6 +3,7 @@ class PostsController < ApplicationController
 
   def index
     @posts= Post.all
+    @post = Post.new
  end
 
  def create
@@ -19,15 +20,22 @@ class PostsController < ApplicationController
  def show
  end
 
+ def edit
+ end
+
  def destroy
-   @post.destroy
+   if @post.destroy
+     redirect_to root_path, flash[:notice]= "Post deleted"
+   else
+     redirect_to :back, flash[:notice]= "Error"
+   end
  end
 
  def update
    if @post.update(post_params)
-     redirect_to post, flash[:notice]= "Changes saved!"
+     redirect_to @post, flash[:notice]= "Changes saved!"
    else
-     redirect_to :back, flash[:alert]= "Error updating"
+     redirect_to :edit, flash[:alert]= "Error updating"
    end
  end
 

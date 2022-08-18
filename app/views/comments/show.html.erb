@@ -1,47 +1,14 @@
 <div class="section">
-  <div class="container">
-    <div class="box">
-      <article class="media">
-        <figure class="media-left">
-          <%= image_tag user_avatar(@comment.user, 64) %>
-        </figure>
-        <div class="media-content">
-          <div class="content">
-            <p>
-              <strong><%= @comment.user.first_name %></strong> -
-              <small><%= time_ago_in_words(@comment.created_at) %> ago</small>
-            <br>
-              <%= @comment.body %>
-            </p>
-
-
-            <% if @comment.user == current_user %>
-              <nav class="level is-mobile">
-                <div class="level-left">
-                  <p class="level-item">
-                    <small> <%= link_to edit_comment_path(@comment) do %>
-                              <i class="fa-solid fa-pen-to-square"></i>
-                            <% end %> |
-                            <%= link_to comment_path(@comment), data: {"turbo-method": :delete} do %>
-                              <i class="fa-solid fa-trash-can"></i>
-                            <% end %>
-                     </small>
-                    </p>
-                   </div>
-                  </nav>
-             <% end %>
-           </div>
-          </article>
-         </div>
-        </div>
-
+  <div class="comment-container">
+    <%= render "comments/display_comment", comment: @comment %>
+    <%= render "comments/comment_links", comment: @comment %>
 
     <div class="comments-container">
-       <div class="subtitle is-6">Replies</div>
-       <%= render partial: "comments", locals: {commentable: @comment} %><br />
-     </div>
+       <%= render "comments/replies", commentable: @comment %> <br>
+    </div>
 
-     <div class="comment-form">
-       <%= render partial: "form", locals: {commentable: @comment} %>
-     </div>
+    <div class="comment-form">
+       <%= render "comments/form", commentable: @comment %>
+    </div>
   </div>
+ </div>
