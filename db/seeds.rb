@@ -7,52 +7,47 @@
 #   Character.create(name: "Luke", movie: movies.first)
 User.destroy_all
 
-User.create(
-  first_name: "Emily",
-  last_name: "Doe",
+User.create!(
+  name: "Emily Doe",
   email: "emdoe23@gmail.com",
   password: "Emisbest1!",
   password_confirmation: "Emisbest1!",
   location: "Miami, FL",
-  profession: "teacher"
+  profession: "Teacher"
 )
 
-User.create(
-  first_name: "Jon",
-  last_name: "Bonjovi",
+User.create!(
+  name: "Jon Bonjovi",
   email: "jonnyboy34@gmail.com",
   password: "Joniscool2!",
   password_confirmation: "Joniscool2!",
   location: "Denver, CO",
-  profession: "engineer"
+  profession: "Engineer"
 )
 
-User.create(
-  first_name: "Marty",
-  last_name: "Bryd",
+User.create!(
+  name: "Marty Bryd",
   email: "mbryd@gmail.com",
   password: "MartyMoney3!",
   password_confirmation: "MartyMoney3!",
   location: "Portland, OR",
-  profession: "financial advisor"
+  profession: "Financial advisor"
 )
 
-User.create(
-  first_name: "Wendy",
-  last_name: "Bryd",
-  email: "wbryd@gmail.com",
+User.create!(
+  name: "Franny Harris",
+  email: "fharris@gmail.com",
   password: "MomOfTheYear4!",
   password_confirmation: "MomOfTheYear4!",
   location: "Portland, OR",
-  profession: "full-time mom"
+  profession: "Full-time mom"
 )
 
-User.create(
-  first_name: "Jane",
-  last_name: "Smith",
+User.create!(
+  name: "Jane Smith",
   email: "janesmitty@gmail.com",
   password: "JaneGame5!",
   password_confirmation: "JaneGame5!",
   location: "NYC",
-  profession: "artist"
+  profession: "Artist"
 )

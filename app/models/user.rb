@@ -3,7 +3,7 @@ class User < ApplicationRecord
   is_gravtastic :size => 100
 
   validates :email, presence: true, uniqueness: true
-  validates :first_name, :last_name, presence: true
+  validates :name, presence: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -22,10 +22,8 @@ class User < ApplicationRecord
            dependent: :destroy
 
   has_many :friend_ships, dependent: :destroy
-
   has_many :friends, through: :friend_ships, dependent: :destroy
-
   has_many :posts, dependent: :destroy
-
   has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 end

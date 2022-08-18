@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_02_231212) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_17_004612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,6 +70,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_231212) do
     t.index ["user_id"], name: "index_friend_ships_on_user_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "likable_id"
+    t.string "likable_type"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.bigint "user_id", null: false
@@ -86,8 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_231212) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "first_name"
-    t.string "last_name"
+    t.string "name"
     t.string "location"
     t.string "profession"
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -101,5 +109,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_231212) do
   add_foreign_key "friend_requests", "users", column: "sender_id"
   add_foreign_key "friend_ships", "users"
   add_foreign_key "friend_ships", "users", column: "friend_id"
+  add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"
 end

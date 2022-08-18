@@ -16,14 +16,62 @@
 @import 'bulma';
 @import "font-awesome";
 
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  html body {
+    height: 100%;
+    margin-bottom: 0px;
+    background-color: #F0F8FF;
+  }
+
   .main-title {
     color: white;
   }
 
-  .card, .box, .comment-box, .post-box{
-    width: 50%;
+  .box {
+    width: 40%;
   }
 
   .comments-container, .comment-form{
     padding: 20px;
+    margin-left: 60px;
+  }
+
+  .posts-container {
+    padding-top: 100px;
+  }
+
+
+  .like-button {
+    padding-right: 100px;
+  }
+
+
+  .fa-thumbs-up {
+    display: inline;
+    color: white;
+    background-color: gray;
+  }
+
+  .hidden-button {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    height: 20px;
+  }
+
+  .fa-pen-to-square, .fa-trash-can {
+    color: hsl(204, 71%, 39%)
+  }
+
+  .fa-comment, .liked{
+    color: white;
+    background-color: hsl(204, 71%, 39%);
+  }
+
+  .hidden-button:hover {
+    cursor: pointer;
   }
