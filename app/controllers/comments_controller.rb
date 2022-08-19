@@ -27,6 +27,9 @@ class CommentsController < ApplicationController
   def show
   end
 
+  def edit
+  end 
+
   def destroy
     if @comment.destroy
      flash[:notice]= "Comment deleted"

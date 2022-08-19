@@ -1,5 +1,6 @@
 class LikesController < ApplicationController
 
+
   def create
     @like = @likable.likes.new
     @like.user = current_user

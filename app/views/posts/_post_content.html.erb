@@ -15,17 +15,8 @@
         <nav class="level is-mobile">
           <div class="level-left">
             <p class="level-item like-button">
-              <% like = post.likes.find_by(user: current_user) %>
-                <% if like %>
-                  <%= link_to like_path(like), data: { "turbo-method": :delete }, class:"hidden-button has-text-info-dark" do %>
-                    <i class="fas fa-thumbs-up liked"></i> <%= post.likes.count %>
-                  <% end %>
-                <% else %>
-                   <%= link_to likes_path, method: :post,  class: "hidden-button has-text-info-dark" do %>
-                     <i class='fas fa-thumbs-up'></i> <%= post.likes.count %>
-                   <% end %>
-                <% end %>
-             </p>
+              <%= render "likes/like_button", likable: post %>
+            </p>
              <p class="level-item comments-link">
                <%= link_to post_path(post), class: "hidden-button has-text-info-dark" do %>
                  <i class="fa-solid fa-comment"></i> <small>Comments</small>

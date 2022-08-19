@@ -9,7 +9,7 @@ class FriendShipsController < ApplicationController
     friend = friend_request.sender
     if friend_request
       friend_request.accept
-      flash[:notice] = "You are now friends with #{friend.first_name}"
+      flash[:notice] = "You are now friends with #{friend.name}"
       redirect_back(fallback_location: friend_requests_path)
     else
       redirect_to current_user
