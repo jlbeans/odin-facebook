@@ -1,29 +1,34 @@
+
 require 'rails_helper'
 
 RSpec.describe FriendShip, type: :model do
-  let(:user) { User.create!(first_name: 'user', last_name: 'test', email: 'user@test.com', password: 'password', password_confirmation: 'password') }
-  let(:friend) { User.create(first_name: 'friend', last_name: 'test', email: 'friend@test.com', password: 'password', password_confirmation: 'password') }
+  subject(:friend_ship) { FactoryBot.build(:friend_ship) }
 
-  context 'friendship already exists' do
-    it 'does not create new friendship' do
-      user.friend_ships.create(friend: friend)
-      friendship = user.friend_ships.new(friend: friend)
-      expect(friendship).to be_invalid
-    end
+  describe 'active record associations' do
+    it { should belong_to(:user) }
+    it { should belong_to(:friend) }
   end
 
-  context 'friendship does not exist' do
-    context 'user is same as friend' do
-      it 'does not create new friendship' do
-        friendship = user.friend_ships.new(friend: user)
-        expect(friendship).to be_invalid
-      end
-    end
+  describe 'validations' do
+    it { should validate_uniqueness_of(:user_id).scoped_to(:friend_id) }
 
-    context 'user and friend are different' do
-      it 'creates new friendship' do
-        friendship = user.friend_ships.new(friend: friend)
-        expect(friendship).to be_valid
+    context 'custom validations' do
+      let(:user1) { FactoryBot.create(:user) }
+      let(:user2) { FactoryBot.create(:user) }
+
+      describe '#not_self' do
+        it 'should not allow a user to be friends with themselves' do
+          friendship = FriendShip.new(user: user1, friend: user1)
+          expect(friendship.valid?).to be false
+        end
+      end
+
+      describe '#not_duplicate' do
+        it 'should not allow a duplicated friendship' do
+          FriendShip.create!(user: user1, friend: user2)
+          friendship = FriendShip.new(user: user2, friend: user1)
+          expect(friendship.valid?).to be false
+        end
       end
     end
   end

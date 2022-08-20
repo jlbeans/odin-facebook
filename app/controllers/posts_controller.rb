@@ -11,9 +11,11 @@ class PostsController < ApplicationController
    @post.user = current_user
 
    if @post.save
-     redirect_to @post, flash[:notice]= 'You successfully posted!'
+     flash[:notice]= 'You successfully posted!'
+     redirect_to @post
    else
-     redirect_to :back, flash[:alert]= "Error saving"
+     flash[:alert]= "Error saving"
+     redirect_back fallback_location: root_path
    end
  end
 
@@ -25,17 +27,20 @@ class PostsController < ApplicationController
 
  def destroy
    if @post.destroy
-     redirect_to root_path, flash[:notice]= "Post deleted"
+    flash[:notice]= "Post deleted"
    else
-     redirect_to :back, flash[:notice]= "Error"
+    flash[:notice]= "Error"
    end
+   redirect_back  fallback_location: root_path
  end
 
  def update
    if @post.update(post_params)
-     redirect_to @post, flash[:notice]= "Changes saved!"
+     flash[:notice]= "Changes saved!"
+     redirect_to @post
    else
-     redirect_to :edit, flash[:alert]= "Error updating"
+     flash[:alert]= "Error updating"
+     render :edit
    end
  end
 

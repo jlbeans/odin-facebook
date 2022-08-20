@@ -21,6 +21,6 @@ class FriendShipsController < ApplicationController
     friend_ship = FriendShip.find_by(user: current_user, friend: user) || FriendShip.find_by(user: user, friend: current_user)
     friend_ship.destroy
     flash[:notice] = "Friend successfully removed"
-    redirect_back(fallback_location: friend_requests_path)
+    redirect_back(fallback_location: root_path)
   end
 end

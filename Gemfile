@@ -50,6 +50,7 @@ gem "bootsnap", require: false
 
 # user sign in
 gem 'devise'
+gem 'faker', '~> 2.22'
 
 # css
 gem 'bulma-rails', '~> 0.9.3'
@@ -70,6 +71,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
+  gem 'factory_bot_rails', '~> 6.2'
 end
 
 group :development do
@@ -88,4 +90,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'shoulda-matchers', '~> 5.1'
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
 end

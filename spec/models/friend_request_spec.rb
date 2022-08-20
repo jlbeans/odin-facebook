@@ -1,27 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe FriendRequest, type: :model do
-  let(:user1) { User.new(id: 1,
-    first_name: 'Person',
-    last_name: 'One',
-    email: 'rspec1@test.com',
-    password: 'password',
-    password_confirmation: 'password') }
+  subject(:friend_request) { FactoryBot.build(:friend_request) }
 
-  let(:user2) { User.new(id: 2,
-    first_name: 'Person',
-    last_name: 'Two',
-    email: 'rspec2@test.com',
-    password: 'password',
-    password_confirmation: 'password') }
+  describe 'validations' do
+    it { should validate_uniqueness_of(:receiver_id).scoped_to(:sender_id) }
 
-  let!(:first_request) { FriendRequest.create(sender: user1, receiver: user2) }
+    context 'custom validations' do
+      let(:user1) { FactoryBot.create(:user) }
+      let(:user2) { FactoryBot.create(:user) }
 
 
-  context 'friend_request does not exist' do
-    it 'should be valid' do
-      second_request = FriendRequest.new(sender: user2, receiver: user1)
-      expect(second_request).to be_valid
+      describe '#not_self' do
+        it 'should not allow user to send request to self' do
+          request = FriendRequest.new(sender: user1, receiver: user1)
+          expect(request.valid?).to be false
+        end
+      end
+
+      describe '#no_pending_request' do
+        it 'should not allow a duplicate request' do
+          FriendRequest.create(sender: user1, receiver: user2)
+          request = FriendRequest.new(sender: user2, receiver: user1)
+          expect(request.valid?).to be false
+        end
+      end
     end
+
+  describe 'active record associations' do
+    it { should belong_to(:receiver) }
+    it { should belong_to(:sender) }
   end
+ end
 end

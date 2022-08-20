@@ -1,9 +1,9 @@
 class FriendRequest < ApplicationRecord
   validate :not_self
-  validate :not_friends
+  validate :not_friends, if: -> { sender}
+  validate :no_pending_request
 
-  validates :sender, presence: true
-  validates :receiver, presence: true, uniqueness: { scope: :sender}
+  validates :receiver_id, uniqueness: { scope: :sender_id}
 
   belongs_to :sender, class_name: "User"
   belongs_to :receiver, class_name: "User"
@@ -24,6 +24,14 @@ class FriendRequest < ApplicationRecord
   end
 
   def not_friends
-    errors.add(:receiver, message: "is already a friend!") if  sender.friends.include?(receiver) || receiver.friends.include?(sender)
+    if sender.friends.any? { |friend| friend.id == receiver.id }
+      errors.add(:receiver_id, :blank, message: "already friends")
+    end
+  end
+
+  def no_pending_request
+    if FriendRequest.exists?(sender_id: receiver_id, receiver_id: sender_id)
+      errors.add(:receiver_id, :blank, message: 'There is already a pending request from this user.')
+    end
   end
 end
