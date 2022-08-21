@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  # You can exclude the 'only' below since the list of actions includes
+  # all the actions in the controller
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   def create
@@ -15,6 +17,9 @@ class CommentsController < ApplicationController
   end
 
   def update
+    # Seems like you would need to pass in the comment_params for the update
+    # to actually update anything.
+    # @comment.update(comment_params)
     if @comment.update
       flash[:notice]= "Changes saved!"
       redirect_to @comment.commentable
@@ -28,7 +33,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
-  end 
+  end
 
   def destroy
     if @comment.destroy
@@ -36,7 +41,8 @@ class CommentsController < ApplicationController
     else
      flash[:alert]= "Error"
     end
-    redirect_back fallback_location: root_path
+    # https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
+    redirect_back fallback_location: root_path, status: 303
   end
 
   private

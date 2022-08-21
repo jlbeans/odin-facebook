@@ -10,6 +10,10 @@ class FriendRequest < ApplicationRecord
 
   def accept
     receiver.friends << sender
+    # Instead of destroying, you could consider adding a `status` column and
+    # set it to 'pending', 'accepted', or 'rejected' as needed. That would
+    # allow you to do things like prevent the same friend request being sent
+    # multiple times from / to the same users.
     self.destroy
   end
 
@@ -20,6 +24,10 @@ class FriendRequest < ApplicationRecord
   private
 
   def not_self
+    # Another good way of handling this is with a guard clause
+    # return if sender != receiver
+    #
+    # errors.add(:receiver, message: "cannot be the same as sender")
     errors.add(:receiver, message: "cannot be the same as sender") if sender == receiver
   end
 

@@ -3,6 +3,8 @@
     <div class="title is-5 has-text-centered">New Friend Requests</div>
       <div class="columns">
         <div class="column is-three-fifths">
+          <% # I think the `@incoming_requests.empty?` should come before this
+             # opening paragraph tag %>
           <p class="has-text-centered"> You have no new requests at this time... <% if @incoming_requests.empty? %></p>
           <% end %>
           <ul>

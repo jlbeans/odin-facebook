@@ -8,11 +8,17 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  # For edit/update, you probably would want to restrict this capability to only
+  # the current user, otherwise any user could modify another user's profile
+  # def edit
+  #   @user = current_user
+  # end
   def edit
     @user = User.find(params[:id])
   end
 
   def update
+    # @user = current_user
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice]= "Profile updated"
