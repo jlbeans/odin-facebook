@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if @comment.update
+    if @comment.update(comment_params)
       flash[:notice]= "Changes saved!"
       redirect_to @comment.commentable
     else
@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
-  end 
+  end
 
   def destroy
     if @comment.destroy
