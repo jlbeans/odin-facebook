@@ -1,5 +1,4 @@
 class FriendShipsController < ApplicationController
-
   def index
     @friendships = current_user.friend_ships
   end
@@ -7,22 +6,22 @@ class FriendShipsController < ApplicationController
   def create
     friend_request = FriendRequest.find_by(receiver: current_user, sender: User.find(params[:sender_id]))
     friend = friend_request.sender
-    # You could slightly shorten this by using safe navigation
-    # if friend_request&.accept
-    if friend_request
-      friend_request.accept
-      flash[:notice] = "You are now friends with #{friend.name}"
-      redirect_back(fallback_location: friend_requests_path)
+    if friend_request&.accept
+      flash[:notice] = "You are now friends with #{friend.name}!"
     else
-      redirect_to current_user
+      flash[:alert] = "Oops, something went wrong"
     end
+    redirect_to friend
   end
 
   def destroy
     user = User.find(params[:id])
-    friend_ship = FriendShip.find_by(user: current_user, friend: user) || FriendShip.find_by(user: user, friend: current_user)
-    friend_ship.destroy
-    flash[:notice] = "Friend successfully removed"
+    friendship = FriendShip.find_by(user: current_user, friend: user) || FriendShip.find_by(user: user, friend: current_user)
+    if friendship&.destroy
+      flash[:notice] = "Friend successfully removed"
+    else
+      flash[:alert] = "Oops, something went wrong"
+    end
     redirect_back(fallback_location: root_path)
   end
 end

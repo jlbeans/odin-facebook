@@ -1,50 +1,46 @@
 class PostsController < ApplicationController
-  # You can exclude the 'only' below since the list of actions includes
-  # all the actions in the controller
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
-
   def index
     @posts= Post.all
     @post = Post.new
- end
+  end
 
- def create
-   @post = Post.new(post_params)
-   @post.user = current_user
+  def create
+    @post = Post.new(post_params)
+    @post.user = current_user
 
-   if @post.save
-     flash[:notice]= 'You successfully posted!'
+    if @post.save
+     flash[:notice]= 'You created a new post!'
      redirect_to @post
-   else
-     flash[:alert]= "Error saving"
+    else
+     flash[:alert]= "Error saving post"
      redirect_back fallback_location: root_path
-   end
- end
+    end
+  end
 
- def show
- end
+  def show
+  end
 
- def edit
- end
+  def edit
+  end
 
- def destroy
-   if @post.destroy
-    flash[:notice]= "Post deleted"
-   else
-    flash[:notice]= "Error"
-   end
-   redirect_back  fallback_location: root_path
- end
+  def destroy
+    if post.destroy
+     flash[:notice]= "Post deleted!"
+    else
+     flash[:notice]= "Error removing post"
+    end
+    redirect_back fallback_location: root_path
+  end
 
- def update
-   if @post.update(post_params)
-     flash[:notice]= "Changes saved!"
-     redirect_to @post
-   else
-     flash[:alert]= "Error updating"
-     render :edit
-   end
- end
+  def update
+    if post.update(post_params)
+      flash[:notice]= "Changes saved, post has been updated!"
+      redirect_to post
+    else
+      flash[:alert]= "Error updating post"
+      render :edit
+    end
+  end
 
 
  private
@@ -53,13 +49,7 @@ class PostsController < ApplicationController
    params.require(:post).permit(:body)
  end
 
- # Another common pattern for this same purpose is to call a memoized post method
- # and then use then method in place of the @post instance variables
- # eg
- # def post
- #   @post ||= Post.find(params[:id])
- # end
- def set_post
-   @post = Post.find(params[:id])
+ def post
+   @post ||= Post.find(params[:id])
  end
 end
