@@ -5,6 +5,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_permitted_parameters
+    # The keys for sign_up don't match the fields in the sign-up form.
+    # Should be keys: [:name]
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])
     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :avatar])
   end

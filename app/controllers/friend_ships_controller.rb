@@ -7,6 +7,8 @@ class FriendShipsController < ApplicationController
   def create
     friend_request = FriendRequest.find_by(receiver: current_user, sender: User.find(params[:sender_id]))
     friend = friend_request.sender
+    # You could slightly shorten this by using safe navigation
+    # if friend_request&.accept
     if friend_request
       friend_request.accept
       flash[:notice] = "You are now friends with #{friend.name}"

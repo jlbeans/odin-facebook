@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  # You can exclude the 'only' below since the list of actions includes
+  # all the actions in the controller
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -51,6 +53,12 @@ class PostsController < ApplicationController
    params.require(:post).permit(:body)
  end
 
+ # Another common pattern for this same purpose is to call a memoized post method
+ # and then use then method in place of the @post instance variables
+ # eg
+ # def post
+ #   @post ||= Post.find(params[:id])
+ # end
  def set_post
    @post = Post.find(params[:id])
  end

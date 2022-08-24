@@ -4,7 +4,7 @@
       <i class="fas fa-thumbs-up liked"></i> <%= likable.likes.count %>
     <% end %>
   <% else %>
-     <%= link_to polymorphic_path(likable), method: :post,  class: "hidden-button has-text-info-dark" do %>
+     <%= link_to polymorphic_path([likable, :likes]), data: { "turbo-method": :post },  class: "hidden-button has-text-info-dark" do %>
        <i class='fas fa-thumbs-up'></i> <%= likable.likes.count %>
      <% end %>
   <% end %>
