@@ -1,41 +1,35 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe "/users", type: :request do
   let(:user) { FactoryBot.create(:user) }
   before(:each) { sign_in user }
 
-  describe 'GET #index' do
-    it 'renders all users page' do
-      get :index
-      expect(response).to render_template(:index)
+  describe 'GET /index' do
+    it 'returns http success' do
+      get '/users/index'
+      expect(response).to have_http_status(:success)
     end
   end
 
-  describe 'GET #show' do
-    it 'renders user show page' do
-      get :show, params: { id: user.id }
-      expect(response).to render_template(:show)
+  describe 'GET /show' do
+    it 'returns http success' do
+      get user_url(user)
+      expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET #edit' do
-    it 'renders user edit profile page' do
-      get :edit, params: { id: user.id }
-      expect(response).to render_template(:edit)
+    it 'returns http success' do
+      get edit_user_url(user)
+      expect(response).to have_http_status(:success)
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        { location: 'place', profession: 'job' }
-      }
-
-      it "updates user's info" do
-        put :update, params: { id: user.id, user: new_attributes }
-        user.reload
-        expect(user.profession).to eq('job')
-      end
+  describe "PATCH #update" do
+    it 'updates the user info' do
+      patch user_url(user), params: { user: { profession: 'Job'} }
+      user.reload
+      expect(response).to have_http_status(:success)
     end
   end
 end

@@ -3,23 +3,24 @@
     <div class="title is-5 has-text-centered">New Friend Requests</div>
       <div class="columns">
         <div class="column is-three-fifths">
-          <% # I think the `@incoming_requests.empty?` should come before this
-             # opening paragraph tag %>
-          <p class="has-text-centered"> You have no new requests at this time... <% if @incoming_requests.empty? %></p>
+          <% if @incoming_requests.empty? %>
+            <p class="has-text-centered">
+              You have no new requests at this time...
+            </p>
           <% end %>
           <ul>
             <% @incoming_requests.each do |fr| %>
               <li> <div class="level">
                      <div class="level-left">
-                       <p class="level-item"><%= image_tag user_avatar(user, 75) %></p>
-                       <p class="level-item"><%= link_to fr.sender.name, user_path(fr.sender) %></p>
+                       <p class="level-item"><%= image_tag user_avatar(fr.sender, 75) %></p>
+                       <p class="level-item"><%= link_to fr.sender.name, user_path(fr.sender), class: "has-text-info-dark" %></p>
                      </div>
 
                      <div class="level-right">
-                       <p class="level-item"><%= render "accept_request", sender: fr.sender, sender_id: fr.sender.id %></p>
+                       <p class="level-item"><%= render "accept_request", sender_id: fr.sender_id %></p>
                      </div>
                   </div>
-               </li>
+               </li> <br />
             <% end %>
           </ul>
         </div>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Welcome to Odin's Clubhouse, <%= @user.name %>!</p>
+    <p>
+      You have successfully signed up to be a member,
+      and can now start connecting with other members.<br>
+    </p>
+    <p>
+      To login to the site, just click <%= link_to 'here', new_user_session_url %>.
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+    <p>The Odin Team</p>
+  </body>
+</html>

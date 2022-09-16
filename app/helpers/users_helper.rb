@@ -1,5 +1,5 @@
 module UsersHelper
-  def user_avatar(user,size)
+  def user_avatar(user, size)
     if user.avatar.attached?
       user.avatar.variant(resize_to_limit: [size,size])
     else

@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :set_post, except: [:index, :create]
   def index
     @posts= Post.all
     @post = Post.new
@@ -24,18 +25,18 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if post.destroy
+    if @post&.destroy
      flash[:notice]= "Post deleted!"
     else
      flash[:notice]= "Error removing post"
     end
-    redirect_back fallback_location: root_path
+    redirect_to root_path, status: 303
   end
 
   def update
-    if post.update(post_params)
+    if @post&.update(post_params)
       flash[:notice]= "Changes saved, post has been updated!"
-      redirect_to post
+      redirect_to @post
     else
       flash[:alert]= "Error updating post"
       render :edit
@@ -49,7 +50,7 @@ class PostsController < ApplicationController
    params.require(:post).permit(:body)
  end
 
- def post
-   @post ||= Post.find(params[:id])
+ def set_post
+   @post= Post.find(params[:id])
  end
 end

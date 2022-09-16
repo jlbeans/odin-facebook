@@ -1,6 +1,6 @@
+require 'rails_helper'
+
 RSpec.describe Post, type: :model do
-
-
   describe 'validations' do
     it 'should contain a body' do
       post = FactoryBot.build(:post, body: '')

@@ -22,6 +22,6 @@ class FriendShipsController < ApplicationController
     else
       flash[:alert] = "Oops, something went wrong"
     end
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: root_path, status: 303)
   end
 end

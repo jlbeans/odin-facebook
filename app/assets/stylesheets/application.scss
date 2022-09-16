@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
 @import 'bulma';
 @import "font-awesome";
 
@@ -22,8 +23,9 @@
   }
 
   html body {
-    height: 100%;
-    margin-bottom: 0px;
+    min-height: 100vh;
+    width: 100vw;
+    margin-bottom: 0;
     background-color: #F0F8FF;
   }
 
@@ -41,7 +43,7 @@
   }
 
   .posts-container {
-    padding-top: 100px;
+    padding-top: 20px;
   }
 
 

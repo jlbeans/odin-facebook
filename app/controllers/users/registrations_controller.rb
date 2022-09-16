@@ -1,13 +1,3 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  require 'gravtastic'
-  before_action :configure_permitted_parameters
-
-  protected
-
-  def configure_permitted_parameters
-    # The keys for sign_up don't match the fields in the sign-up form.
-    # Should be keys: [:name]
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :avatar])
-  end
+  after_action :send_welcome_email, only: :create, if: -> { @user.persisted? }
 end

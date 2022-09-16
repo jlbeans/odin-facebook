@@ -4,7 +4,7 @@ class FriendRequestsController < ApplicationController
   end
 
   def create
-    @friend_request = current_user.sent_friend_requests.build(friend_request_params)
+    @friend_request = current_user.sent_friend_requests.create(friend_request_params)
     if @friend_request.save
       flash[:notice] = "Friend request sent!"
     else
@@ -20,7 +20,7 @@ class FriendRequestsController < ApplicationController
     else
       flash[:alert] = "Error deleting request"
     end
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: root_path, status: 303)
   end
 
 

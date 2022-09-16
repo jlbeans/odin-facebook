@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :set_comment, except: [:create]
+
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
@@ -12,9 +14,9 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if comment&.update
+    if @comment&.update(comment_params)
       flash[:notice]= "Changes saved, comment has been updated!"
-      redirect_to comment.commentable
+      redirect_to @comment.commentable
     else
       flash[:alert]= "Error updating"
       render :edit
@@ -28,13 +30,13 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    if comment&.destroy
+    if @comment&.destroy
      flash[:notice]= "Comment deleted!"
     else
      flash[:alert]= "Error deleting comment"
     end
     # https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
-    redirect_back fallback_location: root_path, status: 303
+    redirect_to @comment.commentable, status: 303
   end
 
   private
@@ -43,7 +45,7 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 
-  def comment
-    @comment ||= Comment.find(params[:id])
+  def set_comment
+    @comment= @commentable.comments.find(params[:id])
   end
 end
