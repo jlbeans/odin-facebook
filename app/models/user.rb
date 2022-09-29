@@ -22,8 +22,16 @@ class User < ApplicationRecord
            foreign_key: "receiver_id",
            dependent: :destroy
 
-  has_many :friend_ships, dependent: :destroy
-  has_many :friends, through: :friend_ships, dependent: :destroy
+  has_many :friend_ships,
+    ->(user) { FriendShipsQuery.both_ways(user_id: user.id) },
+    inverse_of: :user,
+    dependent: :destroy
+
+  has_many :friends,
+    ->(user) { UsersQuery.friends(user_id: user.id, scope: true) },
+    through: :friend_ships,
+    dependent: :destroy
+
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy

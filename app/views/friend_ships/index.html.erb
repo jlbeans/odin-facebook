@@ -1,22 +1,23 @@
 <div class="section">
   <div class="friends-container">
-  <div class="subtitle is-6 has-text-centered">My Friends</div>
-  <% if current_user.friends.any? %>
-      <% current_user.friends.each do |friend| %>
-      <ul> <div class="level">
-             <div class="level-left">
-               <p class="level-item"><%= image_tag user_avatar(friend, 75) %></p>
-               <p class="level-item"><%= link_to friend.name, user_path(friend), class: "has-text-info-dark" %></p>
-             </div>
+    <div class="subtitle is-6 has-text-centered">My Friends</div>
+      <% if @friends.any? %>
+        <% @friends.each do |friend| %>
+        <% friendship = FriendShip.where(user: friend, friend: current_user).or(FriendShip.where(user: current_user, friend: friend)).first %>
+          <ul> <div class="level">
+                 <div class="level-left">
+                   <p class="level-item"><%= image_tag user_avatar(friend, 75) %></p>
+                   <p class="level-item"><%= link_to friend.name, user_path(friend), class: "has-text-info-dark" %></p>
+                 </div>
 
-             <div class="level-right">
-               <p class="level-item"><%= link_to "Remove Friend", friend_ship_path(id: friend.id), data: { "turbo-method": :delete }, class: "button is-danger" %></p>
-              </div>
-            </div><br />
-       </ul>
+                 <div class="level-right">
+                   <p class="level-item"><%= link_to "Remove Friend", friend_ship_path(friendship), data: { "turbo-method": :delete }, class: "button is-danger" %></p>
+                 </div>
+                </div><br />
+           </ul>
+         <% end %>
+       <% else  %>
+         <p> No friends yet! </p>
       <% end %>
-  <% else  %>
-    <p> No friends yet! </p>
-  <% end %>
- </div>
-</div>
+   </div>
+  </div>

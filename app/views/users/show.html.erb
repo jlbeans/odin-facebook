@@ -1,7 +1,7 @@
 <div class="section">
   <div class="container">
     <div class="columns is-centered">
-      <div class="column">
+      <div class="column user-info">
         <article class="media">
           <figure class="media-left">
             <%= image_tag user_avatar(@user, 100) %>
@@ -30,18 +30,18 @@
           </div>
 
 
-          <div class="column">
+          <div class="column user-friends">
             <% if @user == current_user %>
               <p> <%= link_to "My Friends", friend_ships_path, class: "has-text-info-dark" %> </p> <br>
               <p> <%= link_to "Pending Friend Requests", friend_requests_path, class: "has-text-info-dark" %> </p>
             <% else %>
-              <p> <%= render "friend", user: @user %> </p>
+              <p> <%= render "friend_status", user: @user %> </p>
             <% end %>
            </div>
           </div>
          </div>
 
-        <div class="posts-container">
+        <div class="user-posts">
           <div class="title is-6">Posts</div>
            <% if @user.posts.any? %>
              <% @user.posts.each do |post| %>

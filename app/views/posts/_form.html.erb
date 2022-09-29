@@ -1,4 +1,4 @@
-<%= simple_form_for(@post) do |f| %>
+<%= form_with(model: post) do |f| %>
   <article class="media">
     <figure class="media-left">
        <%= image_tag user_avatar(current_user, 64) %>
@@ -6,13 +6,13 @@
     <div class="media-content">
       <div class="field">
         <p class="control post-box">
-          <%= f.input :body, label: false, input_html: { class: "textarea" }, wrapper: false, placeholder: "What's on your mind?" %>
+          <%= f.text_area :body, label: false, input_html: { class: "textarea" }, wrapper: false, placeholder: "What's on your mind?" %>
         </p>
       </div>
       <nav class="level">
         <div class="level-left">
           <div class="level-item">
-            <%= f.button :submit, "Post", class: "button is-primary" %>
+            <%= f.submit "Post", class: "button is-primary" %>
           </div>
         </div>
       </nav>

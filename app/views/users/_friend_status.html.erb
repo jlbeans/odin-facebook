@@ -1,0 +1,13 @@
+<% sent_request= current_user.sent_friend_requests.find_by(receiver: user) %>
+<% received_request =  current_user.received_friend_requests.find_by(sender: user) %>
+<% friendship = FriendShip.where(user: user, friend: current_user).or(FriendShip.where(user: current_user, friend: user)).first %>
+
+<% if current_user.friends.include?(user) %>
+  <p class="level-item"><%= link_to "Remove Friend", friend_ship_path(friendship), data: { "turbo-method": :delete }, class: "button is-danger" %></p>
+<% elsif sent_request.present? %>
+  <p class="level-item"><%= link_to "Cancel Request", cancel_friend_request_path(sent_request), data: { "turbo-method": :delete }, class: "button is-danger" %></p>
+<% elsif received_request.present? %>
+  <p class="level-item"><%= render "friend_requests/accept_or_decline_request", friend_request: received_request %></p>
+<% else %>
+  <p class="level-item"><%= link_to "Add Friend", friend_requests_path(receiver_id: user.id), data: { "turbo-method": :post }, class: "button is-primary" %></p>
+<% end %>

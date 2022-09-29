@@ -6,7 +6,7 @@ RSpec.describe "/users", type: :request do
 
   describe 'GET /index' do
     it 'returns http success' do
-      get '/users/index'
+      get users_url
       expect(response).to have_http_status(:success)
     end
   end
@@ -25,11 +25,18 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "PATCH #update" do
-    it 'updates the user info' do
-      patch user_url(user), params: { user: { profession: 'Job'} }
-      user.reload
-      expect(response).to have_http_status(:success)
+  describe "PATCH /update" do
+    context "with valid attributes" do
+      let(:new_attributes) {
+        { profession: 'Job',
+           location: 'LA' }
+      }
+
+      it "updates the user's info" do
+        patch user_url(user), params: { id: user.to_param, user: new_attributes }
+        user.reload
+        expect(user.profession).to eq('Job')
+      end
     end
   end
 end

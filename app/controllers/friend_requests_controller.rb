@@ -1,32 +1,55 @@
 class FriendRequestsController < ApplicationController
+  before_action :set_friend_request, except: [:create, :index]
+
   def index
     @incoming_requests = current_user.received_friend_requests
   end
 
   def create
-    @friend_request = current_user.sent_friend_requests.create(friend_request_params)
+    @friend_request = FriendRequest.create(sender_id: current_user.id, receiver_id: params[:receiver_id])
     if @friend_request.save
       flash[:notice] = "Friend request sent!"
     else
       flash[:alert] = "Error creating request"
     end
-    redirect_to user_path(friend_request_params[:receiver_id])
+    redirect_back(fallback_location: user_path(current_user))
   end
 
-  def destroy
-    friend_request = current_user.friend_requests.find_by(id: params[:id])
-    if friend_request&.destroy
-      flash[:notice]= "Friend request removed!"
+  def cancel
+    if @friend_request.sender == current_user
+     @friend_request.destroy
+      flash[:notice]= "Friend request canceled!"
     else
-      flash[:alert] = "Error deleting request"
+      flash[:alert] = "Error canceling request"
+    end
+    redirect_back(fallback_location: root_path, status: 303)
+  end
+
+  def accept
+    if @friend_request.receiver == current_user
+      FriendShip.create!(user: current_user, friend: @friend_request.sender)
+      @friend_request.destroy
+      flash[:notice]= "Friend request accepted!"
+    else
+      flash[:alert]= "Error accepting request"
+    end
+    redirect_back(fallback_location: user_path(current_user))
+  end
+
+  def decline
+    if @friend_request.receiver == current_user
+      @friend_request.destroy
+      flash[:notice]= "Friend request declined!"
+    else
+      flash[:alert]= "Error declining request"
     end
     redirect_back(fallback_location: root_path, status: 303)
   end
 
 
-  private
+private
 
-  def friend_request_params
-    params.require(:friend_request).permit(:sender_id, :receiver_id)
+  def set_friend_request
+    @friend_request = FriendRequest.find(params[:id])
   end
 end

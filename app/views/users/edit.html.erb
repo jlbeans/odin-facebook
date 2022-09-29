@@ -2,8 +2,8 @@
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-4">
-        <div class="title is-4">Update personal info</div>
-          <%= simple_form_for @user do |f| %>
+        <div class="title is-4">Update Profile</div>
+          <%= form_with(model: @user, local: true) do |f| %>
 
             <div class="field">
               <div class="control">
@@ -23,17 +23,17 @@
 
             <div class="field">
               <div class="control">
-                <%= f.input :profession, autofocus: true, input_html: { class: "input"}, wrapper: false, label_html: { class: "label" } %>
+                <%= f.text_field :profession, autofocus: true, wrapper: false, label_html: { class: "label" } %>
               </div>
             </div>
 
             <div class="field">
               <div class="control">
-                <%= f.input :location, autofocus: true, input_html: { class: "input"}, wrapper: false, label_html: { class: "label" } %>
+                <%= f.text_field :location, autofocus: true, wrapper: false, label_html: { class: "label" } %>
               </div>
             </div>
 
-            <%= f.button :submit, "Update", class:"button is-info" %>
+            <%= f.submit "Update", class: "button is-info" %>
 
           <% end %>
         </div>

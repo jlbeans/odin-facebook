@@ -1,37 +1,48 @@
 require 'rails_helper'
 
 RSpec.describe "/posts/comments", type: :request do
-  let(:post) { FactoryBot.create(:post) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:commentable) { FactoryBot.create(:post) }
+
+  before(:each) { sign_in user }
 
   describe 'POST /create' do
     it 'creates a new comment' do
-      user = FactoryBot.create(:user)
-      sign_in user
       expect {
-        post post_comments_url(post_id: post.id), params: { comment: { body: "Cool!" } }
+        post post_comments_url(commentable), params: { comment: { body: 'Testing.'} }
       }.to change(Comment, :count).by(1)
     end
+  end
 
-    it "redirects to the post" do
-      post post_comments_url(post_id: post.id), params: { comment: { body: "Cool!" } }
-      expect(response).to redirect_to(post_url(post))
+  describe 'GET /show' do
+    it 'shows the requested comment' do
+      comment= FactoryBot.create(:comment, user: user)
+      get post_comment_url(comment.commentable, comment), params: {id: comment.to_param}
+      expect(response).to have_http_status(:success)
     end
   end
+
 
   describe 'PATCH /update' do
-    it 'updates the requested comment' do
-      comment = FactoryBot.create(:comment, commentable: post)
-      patch post_comment_url(post, comment), params: { comment: { body: 'Nice!'} }
-      comment.reload
-      expect(response).to redirect_to(post_url(post))
+      context "with valid params" do
+        let(:new_attributes) {
+          { body: 'Test edit.' }
+        }
+
+        it "updates the requested comment" do
+          comment= FactoryBot.create(:comment, user: user)
+          patch post_comment_url(comment.commentable, comment), params: { id: comment.to_param, comment: new_attributes }
+          comment.reload
+          expect(comment.body).to eq('Test edit.')
+        end
+      end
     end
-  end
 
   describe 'DELETE /destroy' do
     it 'deletes the requested comment' do
-      comment = FactoryBot.create(:comment, commentable: post)
+      comment= FactoryBot.create(:comment, user: user)
       expect {
-        delete post_comment_url(post, comment)
+        delete post_comment_url(comment.commentable, comment), params: { id: comment.to_param }
       }.to change(Comment, :count).by(-1)
     end
   end

@@ -1,25 +1,9 @@
-<div class="subtitle is-6 has-text-centered">Editing Post</div>
-  <%= simple_form_for (@post) do |f| %>
-    <article class="media">
-      <figure class="media-left">
-         <%= image_tag user_avatar(current_user, 64) %>
-      </figure>
-      <div class="media-content">
-        <div class="field">
-          <p class="control post-box">
-            <%= f.input :body, label: false, input_html: { class: "textarea" }, wrapper: false, placeholder: "What's on your mind?" %>
-          </p>
-        </div>
-        <nav class="level">
-          <div class="level-left">
-            <div class="level-item">
-              <%= f.button :submit, "Update Post", data: {"turbo-method": :patch}, class: "button is-primary" %>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </article>
-  <% end %>
+<div class="section">
+  <div class="form-container">
+    <%= render 'form', post: @post %>
+  </div>
+</div>
+
 
   <nav class="navbar is-fixed-bottom">
 	<div class="navbar-menu">

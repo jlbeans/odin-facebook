@@ -1,36 +1,54 @@
 require 'rails_helper'
-require 'feature_helper'
-
-RSpec.configure do |c|
-  c.include FeatureHelper
-end
 
 feature 'creates a comment' do
   given(:user) { FactoryBot.create(:user) }
   given(:post) { FactoryBot.create(:post) }
+
+  background(:each) { sign_in user }
+
+  scenario 'creates a form for commenting on a post' do
+    visit post_url(post)
+    expect(page).to have_field('comment[body]', placeholder: "Add a comment")
+  end
+
+  scenario 'comments on a post' do
+    visit post_url(post)
+    fill_in 'comment[body]', with: 'Thanks.'
+    find('.is-primary').click
+    expect(page).to have_content('Thanks.')
+  end
+end
+
+feature 'edits a comment' do
+  given(:user) { FactoryBot.create(:user) }
+  given(:post) { FactoryBot.create(:post) }
   given(:comment) { FactoryBot.create(:comment, commentable: post) }
 
-  background(:each) { login user }
+  background(:each) { sign_in user }
 
-  scenario 'creates a comment on a post' do
-    visit posts_url
-    click_on 'Comments'
-    fill_in 'comment_body', with: 'Nice shoes.'
-    click_button 'Comment'
-    expect(page).to have_content('Nice shoes.')
+  scenario 'has an edit page' do
+    visit edit_comment_url(comment)
+    expect(page).to have_button('Update Comment')
   end
 
-  scenario 'creates a form for commenting on a comment' do
-    visit post_comments_url(post)
-    click_on 'Comments'
-    expect(page).to have_field('comment_body', placeholder: "Add a comment")
+  scenario 'updates comments and redirects to commentable' do
+    visit edit_comment_url(comment)
+    fill_in 'comment[body]', with: 'Edited comment.'
+    find('.is-primary').click
+    expect(page).to have_content('Edited comment.')
   end
+end
 
-  scenario 'comments on a comment' do
-    visit comment_comments_url(comment)
-    click_on 'Comments'
-    fill_in 'comment_body', with: 'Thanks.'
-    click_button 'Comment'
-    expect(page).to have_content('Thanks.')
+feature 'deleting a comment' do
+  given(:user) { FactoryBot.create(:user) }
+  given(:post) { FactoryBot.create(:post) }
+  given(:comment) { FactoryBot.create(:comment, user: user, commentable: post) }
+
+  background(:each) { sign_in user }
+
+  scenario 'deletes comment' do
+    visit comment_url(comment)
+    find(".trash").click
+    expect(page).not_to have_content comment.body
   end
 end

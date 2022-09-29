@@ -1,7 +1,11 @@
 class PostsController < ApplicationController
-  before_action :set_post, except: [:index, :create]
+  before_action :set_post, except: [:index, :create, :new]
   def index
-    @posts= Post.all
+    @posts = Post.all
+    @post = Post.new
+  end
+
+  def new
     @post = Post.new
   end
 
@@ -14,11 +18,12 @@ class PostsController < ApplicationController
      redirect_to @post
     else
      flash[:alert]= "Error saving post"
-     redirect_back fallback_location: root_path
+     render :new
     end
   end
 
   def show
+    @post
   end
 
   def edit

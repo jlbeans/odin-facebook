@@ -1,12 +1,12 @@
 <div class="section">
-  <div class="container">
+  <div class="form-container">
     <div class="subtitle is-5 has-text-centered">Timeline</div>
       <%= render "form", post: @post %>
   </div>
 </div>
 
 <div class="section">
-  <div class="posts-container">
+  <div class="timeline-posts">
     <% unless @posts.empty? %>
       <% @posts.each do |post| %>
         <%= render "post_content", post: post %>

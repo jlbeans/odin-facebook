@@ -1,0 +1,4 @@
+<p>
+  <%= link_to "Accept", accept_friend_request_path(friend_request), data: { "turbo-method": :post }, class: "button is-primary accept" %>
+  <%= link_to "Decline", decline_friend_request_path(friend_request), data: { "turbo-method": :delete }, class: "button is-danger decline" %>
+</p>

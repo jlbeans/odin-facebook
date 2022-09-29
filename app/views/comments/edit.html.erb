@@ -1,7 +1,7 @@
 <div class="section">
   <div class="container">
     <div class="subtitle is-6 has-text-centered">Editing Comment</div>
-      <%= simple_form_for(@comment) do |f| %>
+      <%= form_with(model: @comment, local: true) do |f| %>
         <article class="media">
           <figure class="media-left">
             <%= image_tag user_avatar(current_user, 64) %>
@@ -9,13 +9,13 @@
           <div class="media-content">
             <div class="field">
               <div class="control comment-box">
-                <%= f.input :body, label: false, input_html: { class: "textarea" }, wrapper: false, placeholder: "Add a comment" %>
+                <%= f.text_area :body, label: false, input_html: { class: "textarea" }, wrapper: false, placeholder: "Add a comment" %>
               </div>
             </div>
             <nav class="level">
               <div class="level-left">
                 <div class="level-item">
-                  <%= f.button :submit, "Update Comment", data: {"turbo-method": :patch}, class: "button is-primary" %>
+                  <%= f.submit "Update Comment", data: {"turbo-method": :patch}, class: "button is-primary" %>
                </div>
               </div>
             </nav>

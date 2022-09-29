@@ -17,9 +17,9 @@
             <p class="level-item like-button">
               <%= render "likes/like_button", likable: comment %>
             </p>
-            <p class= "level-item comments-link">
+            <p class= "level-item comments">
               <%= link_to comment_path(comment), class: "hidden-button has-text-info-dark" do %>
-                <i class="fa-solid fa-comment"></i> <small>Comments</small>
+                <i class="fa-solid fa-comment"></i> <small><%= comment.comments.count %> Comment(s)</small>
               <% end %>
             </p>
            </div>

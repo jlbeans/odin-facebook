@@ -4,8 +4,15 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show, :edit, :update]
 
-  resources :friend_requests, only: [:index, :create, :destroy ]
-  resources :friend_ships, only: [:index, :create, :destroy]
+  resources :friend_requests, only: [:index, :create ] do
+    member do
+      post 'accept'
+      delete 'cancel'
+      delete 'decline'
+    end
+  end
+
+  resources :friend_ships, only: [:index, :destroy]
 
 
   resources :posts do

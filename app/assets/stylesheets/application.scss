@@ -37,14 +37,42 @@
     width: 40%;
   }
 
-  .comments-container, .comment-form{
-    padding: 20px;
+  .comment-form {
+    padding-top: 40px;
+  }
+
+  .comments-container {
     margin-left: 60px;
   }
 
-  .posts-container {
-    padding-top: 20px;
+  .timeline-posts {
+    padding-top: 5px;
   }
+
+  .user-posts {
+    padding-top: 50px;
+  }
+
+  textarea {
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    width: 50%;
+    resize: none;
+    min-height: 20vh;
+    height: fit-content;
+    box-shadow:
+    0 0.5em 1em -0.125em rgba($scheme-invert, 0.1), 0 0px 0 1px rgba($scheme-invert, 0.02);
+}
+
+input,
+textarea::placeholder {
+    font: 16px/3 sans-serif;
+}
+
+  textarea:focus {
+    outline: none;
+}
 
 
   .like-button {
@@ -60,13 +88,13 @@
 
   .hidden-button {
     border: none;
-    padding: 0;
+    padding: 0px;
     background-color: transparent;
     height: 20px;
   }
 
   .fa-pen-to-square, .fa-trash-can {
-    color: hsl(204, 71%, 39%)
+    color: hsl(204, 71%, 39%);
   }
 
   .fa-comment, .liked{

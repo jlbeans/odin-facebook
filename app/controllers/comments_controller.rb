@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
   end
 
   def show
+    @comment
   end
 
   def edit
@@ -46,6 +47,6 @@ class CommentsController < ApplicationController
   end
 
   def set_comment
-    @comment= @commentable.comments.find(params[:id])
+    @comment= Comment.find(params[:id])
   end
 end

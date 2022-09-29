@@ -9,6 +9,7 @@
             </p>
           <% end %>
           <ul>
+          <div class="current-requests">
             <% @incoming_requests.each do |fr| %>
               <li> <div class="level">
                      <div class="level-left">
@@ -17,11 +18,12 @@
                      </div>
 
                      <div class="level-right">
-                       <p class="level-item"><%= render "accept_request", sender_id: fr.sender_id %></p>
+                       <p class="level-item"><%= render "accept_or_decline_request", friend_request: fr %></p>
                      </div>
                   </div>
                </li> <br />
             <% end %>
+           </div>
           </ul>
         </div>
       </div>
