@@ -1,9 +1,11 @@
 class PostsController < ApplicationController
   before_action :set_post, except: [:index, :create, :new]
+
   def index
-    @posts = Post.all
     @post = Post.new
-  end
+    friend_ids = current_user.friends.pluck(:id)
+    @posts = Post.where(user_id: friend_ids).or(Post.where(user_id: current_user.id)).order(created_at: :desc)
+  end 
 
   def new
     @post = Post.new

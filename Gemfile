@@ -90,6 +90,8 @@ group :development do
   gem 'rubocop-rails'
   gem 'byebug'
   gem 'letter_opener'
+  gem 'guard'
+  gem 'guard-rspec'
 end
 
 group :test do
