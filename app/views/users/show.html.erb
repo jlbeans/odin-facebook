@@ -12,17 +12,31 @@
                 <strong><%= @user.name %></strong>
               </p>
               <p>
-                <% if @user.profession.present? %>
-                  <p> <strong>Profession:</strong> <%= @user.profession %> </p>
-                <% end %>
                 <% if @user.location.present? %>
                   <p> <strong>Location:</strong> <%= @user.location %> </p>
                 <% end %>
 
-                <% if @user == current_user && @user.profession.present? && @user.location.present? %>
-                  <p> <%= link_to "Edit Info", edit_user_path(@user), class: "has-text-info-dark" %> </p>
-                <% elsif @user == current_user %>
-                  <p> <%= link_to "Add Info", edit_user_path(@user), class: "has-text-info-dark" %> </p>
+                <% if @user.profession.present? %>
+                  <p> <strong>Profession:</strong> <%= @user.profession %> </p>
+                <% end %>
+
+                <% if @user.education.present? %>
+                  <p> <strong>Education:</strong> <%= @user.education %> </p>
+                <% end %>
+
+                <% if @user.relationship.present? %>
+                  <p> <strong>Relationship Status:</strong>
+                    <%= @user.relationship %> </p>
+                <% end %>
+
+                <% if @user.birthday.present? %>
+                  <p> <strong>Birthday:</strong>
+                    <%= @user.formatted_birthday %> </p>
+                <% end %>
+
+                <% if @user == current_user %>
+                  <p> <%= link_to "Edit Info", edit_user_path(@user),
+                    class: "has-text-info-dark" %> </p>
                 <% end %>
              </div>
             </div>
@@ -32,8 +46,8 @@
 
           <div class="column user-friends">
             <% if @user == current_user %>
-              <p> <%= link_to "My Friends", friend_ships_path, class: "has-text-info-dark" %> </p> <br>
-              <p> <%= link_to "Pending Friend Requests", friend_requests_path, class: "has-text-info-dark" %> </p>
+              <p> <%= link_to "My Friends", friend_ships_path, class: "button is-info is-inverted" %> </p> <br>
+              <p> <%= link_to "Pending Friend Requests", friend_requests_path, class: "button is-info is-inverted" %> </p>
             <% else %>
               <p> <%= render "friend_status", user: @user %> </p>
             <% end %>

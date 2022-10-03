@@ -6,7 +6,7 @@ class LikesController < ApplicationController
     else
       flash[:alert]= "Oops, something went wrong"
     end
-    redirect_to @likable
+    redirect_back fallback_location: root_path
   end
 
   def destroy

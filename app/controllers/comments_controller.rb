@@ -10,13 +10,13 @@ class CommentsController < ApplicationController
     else
       flash[:alert]= "Error saving comment"
     end
-    redirect_to @commentable
+    redirect_back fallback_location: root_path
   end
 
   def update
     if @comment&.update(comment_params)
       flash[:notice]= "Changes saved, comment has been updated!"
-      redirect_to @comment.commentable
+      redirect_back fallback_location: root_path
     else
       flash[:alert]= "Error updating"
       render :edit
@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
      flash[:alert]= "Error deleting comment"
     end
     # https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
-    redirect_to @comment.commentable, status: 303
+    redirect_back fallback_location: root_path, status: 303
   end
 
   private

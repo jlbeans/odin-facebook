@@ -55,4 +55,8 @@ class User < ApplicationRecord
       super
     end
   end
+
+  def formatted_birthday
+    birthday.strftime('%m/%d')
+  end
 end

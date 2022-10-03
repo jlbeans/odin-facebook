@@ -6,4 +6,8 @@ module UsersHelper
       user.gravatar_url(size: size)
     end
   end
+
+  def formatted_birthday(user)
+    user.birthday.strftime('%m/%d')
+  end
 end
