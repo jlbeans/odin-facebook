@@ -1,0 +1,23 @@
+{
+  "name": "odin-facebook",
+  "version": "1.0.0",
+  "description": "This project is a Facebook clone built with Ruby on Rails and Bulma for styling. Read more [here](https://www.theodinproject.com/courses/ruby-on-rails/lessons/final-project)",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlbeans/odin-facebook.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jlbeans/odin-facebook/issues"
+  },
+  "homepage": "https://github.com/jlbeans/odin-facebook#readme"
+}
