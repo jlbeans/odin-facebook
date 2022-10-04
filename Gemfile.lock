@@ -114,6 +114,8 @@ GEM
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.0)
     ffi (1.15.5)
+    figaro (1.2.0)
+      thor (>= 0.14.0, < 2)
     font-awesome-sass (6.2.0)
       sassc (~> 2.0)
     formatador (1.1.0)
@@ -135,6 +137,7 @@ GEM
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
     hashie (5.0.0)
+    httpclient (2.8.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -172,6 +175,7 @@ GEM
     mini_portile2 (2.8.0)
     minitest (5.16.3)
     msgpack (1.5.6)
+    multi_json (1.15.0)
     multi_xml (0.6.0)
     nenv (0.3.0)
     net-imap (0.2.3)
@@ -225,6 +229,11 @@ GEM
     public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
+    pusher (2.0.3)
+      httpclient (~> 2.8)
+      multi_json (~> 1.15)
+      pusher-signature (~> 0.1.8)
+    pusher-signature (0.1.8)
     racc (1.6.0)
     rack (2.2.4)
     rack-protection (2.2.2)
@@ -379,6 +388,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker (~> 2.22)
+  figaro (~> 1.1, >= 1.1.1)
   font-awesome-sass
   gravtastic
   guard
@@ -391,6 +401,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   pg (~> 1.1)
   puma (~> 5.0)
+  pusher
   rails (~> 7.0.3)
   redis (~> 4.0)
   rspec-rails

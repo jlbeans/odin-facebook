@@ -53,7 +53,12 @@ gem 'devise'
 gem 'omniauth-facebook', '~> 9.0'
 gem 'omniauth-rails_csrf_protection'
 
+#generate user data
 gem 'faker', '~> 2.22'
+
+#environment variables
+gem 'figaro', '~> 1.1', '>= 1.1.1'
+gem 'pusher'
 
 # css
 gem 'bulma-rails', '~> 0.9.3'
