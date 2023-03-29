@@ -1,6 +1,6 @@
 # README
 
-This project is a Facebook clone built with Ruby on Rails and Bulma for styling. Read more [here](https://www.theodinproject.com/courses/ruby-on-rails/lessons/final-project)
+This project is a Facebook clone built with Ruby on Rails and Bulma for styling. To learn more, visit [The Odin Project](https://www.theodinproject.com/courses/ruby-on-rails/lessons/final-project)
 
 # Features
 
